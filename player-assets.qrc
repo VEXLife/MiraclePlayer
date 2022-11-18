@@ -1,0 +1,41 @@
+<RCC>
+    <qresource prefix="/">
+        <file>mplayer/cd.svg</file>
+        <file>mplayer/defaultalbum.png</file>
+        <file>mplayer/heart.svg</file>
+        <file>mplayer/heart_w.svg</file>
+        <file>mplayer/minus.svg</file>
+        <file>mplayer/mplayer-bar.png</file>
+        <file>mplayer/mplayer-bar.svg</file>
+        <file>mplayer/mplayer-item.png</file>
+        <file>mplayer/mplayer.png</file>
+        <file>mplayer/mplayer.svg</file>
+        <file>mplayer/music.svg</file>
+        <file>mplayer/music_w.svg</file>
+        <file>mplayer/pause.svg</file>
+        <file>mplayer/play.svg</file>
+        <file>mplayer/play_w.svg</file>
+        <file>mplayer/repeat.svg</file>
+        <file>mplayer/shuffle.svg</file>
+        <file>mplayer/skip-back.svg</file>
+        <file>mplayer/skip-forward.svg</file>
+        <file>mplayer/square.svg</file>
+        <file>mplayer/x.svg</file>
+        <file>mplayer/heart_fill.svg</file>
+        <file>mplayer/heart_fill_red.svg</file>
+        <file>mplayer/play_fill.svg</file>
+        <file>mplayer/play_w_fill.svg</file>
+        <file>mplayer/Reference.txt</file>
+        <file>mplayer/globe.svg</file>
+        <file>mplayer/globe_w.svg</file>
+        <file>mplayer/search.svg</file>
+        <file>mplayer/order.svg</file>
+        <file>mplayer/folder.svg</file>
+        <file>mplayer/trash.svg</file>
+        <file>mplayer/settings.svg</file>
+        <file>mplayer/volume-1.svg</file>
+        <file>mplayer/volume-2.svg</file>
+        <file>mplayer/volume-x.svg</file>
+        <file>mplayer/settings_w.svg</file>
+    </qresource>
+</RCC>
