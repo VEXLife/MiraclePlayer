@@ -140,7 +140,7 @@ SectionGroupEnd
 !insertmacro FILEASSOC_REGISTRY_UNINSTALL .flac
 !insertmacro FILEASSOC_REGISTRY_UNINSTALL .m4a
 
-LangString DESC_FILEASSOC ${LANG_SIMPCHINESE} "以后想要使用奇迹音乐打开的文件类型"
+LangString DESC_FILEASSOC ${LANG_SIMPCHINESE} "以后想要使用奇迹音乐打开的文件类型。"
 
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
 !insertmacro MUI_DESCRIPTION_TEXT ${MAINCOMP} $(DESC_MAINCOMP)
@@ -169,7 +169,7 @@ Section "Uninstall"
     
     DetailPrint "正在删除文件关联"
     DeleteRegKey HKLM "SOFTWARE\Classes\${ProductName}"
-    DeleteRegKey HKLM "SOFTWARE\Classes\Applications\${MAINEXENAME}\SupportedTypes"
+    DeleteRegKey HKLM "SOFTWARE\Classes\Applications\${MAINEXENAME}"
 SectionEnd
 
 Function ShowAdditionalTasks

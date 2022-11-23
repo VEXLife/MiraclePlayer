@@ -7,8 +7,8 @@
 #define MyAppAssocKey "MiraclePlayer"
 
 #define ComponentAssoc(assoc) "Name: ""fileassoc\" + assoc + """; Description: ""." + assoc + "格式""; Types: full;"
-#define InstallAssoc(assoc) "Root: HKA; Subkey: ""Software\Classes\." + assoc + "\OpenWithProgids""; ValueType: string; ValueName: {{#MyAppAssocKey}; ValueData: """"; Components: ""fileassoc\" + assoc + """; Flags: uninsdeletevalue;" + NewLine + \
-"Root: HKA; Subkey: ""Software\Classes\Applications\{{#MyAppExeName}\SupportedTypes""; ValueType: string; ValueName: ""." + assoc + "; ValueData: ""; Components: ""fileassoc\" + assoc + """; Flags: uninsdeletevalue"
+#define InstallAssoc(assoc) "Root: HKA; Subkey: ""Software\Classes\." + assoc + "\OpenWithProgids""; ValueType: binary; ValueName: " + MyAppAssocKey + "; ValueData: """"; Components: ""fileassoc\" + assoc + """; Flags: uninsdeletevalue;" + NewLine + \
+"Root: HKA; Subkey: ""Software\Classes\Applications\" + MyAppExeName + "\SupportedTypes""; ValueType: binary; ValueName: ""." + assoc + """; ValueData: """"; Components: ""fileassoc\" + assoc + """; Flags: uninsdeletekey"
 
 [Setup]
 AppId={{C10266F4-6C34-4981-ADB6-804D35EF2F8A}
@@ -66,7 +66,8 @@ Name: "fileassoc"; Description: "文件关联"; Types: full;
 [Files]
 Source: "..\miracleplayer_release\*"; DestDir: "{app}"; Components: "maincomp"; Flags: ignoreversion recursesubdirs createallsubdirs
 
-[Registry]
+[Registry]     
+Root: HKA; Subkey: "Software\Classes\Applications\{#MyAppExeName}"; ValueType: none; ValueName: ""; ValueData: ""; Components: "maincomp"; Flags: uninsdeletekey
 {#InstallAssoc("mp3")}       
 {#InstallAssoc("wav")}
 {#InstallAssoc("wma")}
@@ -78,7 +79,7 @@ Source: "..\miracleplayer_release\*"; DestDir: "{app}"; Components: "maincomp"; 
 {#InstallAssoc("m4a")}
 Root: HKA; Subkey: "Software\Classes\{#MyAppAssocKey}"; ValueType: string; ValueName: ""; ValueData: "{#MyAppAssocName}"; Components: "maincomp"; Flags: uninsdeletekey
 Root: HKA; Subkey: "Software\Classes\{#MyAppAssocKey}\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\{#MyAppExeName},0"; Components: "maincomp";
-Root: HKA; Subkey: "Software\Classes\{#MyAppAssocKey}\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" ""%1"""; Components: "maincomp";
+Root: HKA; Subkey: "Software\Classes\{#MyAppAssocKey}\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" ""%1"""; Components: "maincomp";  
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
