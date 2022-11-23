@@ -6,7 +6,7 @@
 
 程序设计上机作业，一个简单的音乐播放器，内置网易源和酷狗源。设计参考自Ahmed Manna的作品，图标来自[FeatherIcon](https://feathericons.com/)。
 
-您可以随意下载、修改和使用本仓库的内容！使用Qt 6编写，Windows下需要额外安装MSVC而非MinGW版Qt编译器，需要Qt Multimedia组件。欢迎您提交贡献！
+您可以随意下载、修改和使用本仓库的内容！使用Qt 6编写，Windows下需要额外安装MSVC（下载安装Visual Studio，安装时勾选“使用C++的桌面开发”即可）而非MinGW版Qt编译器，需要Qt Multimedia组件。欢迎您提交贡献！
 
 [GitHub仓库](https://www.github.com/VEXLife/MiraclePlayer/) [Gitee仓库](https://www.gitee.com/VEXLife/MiraclePlayer/)
 

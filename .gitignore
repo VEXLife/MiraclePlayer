@@ -1,8 +1,11 @@
-# 编译好的程序文件不同步
+# 编译好的程序文件
 miracleplayer_release/
 
-# 生成的安装程序不同步
+# 生成的安装程序
 setup/*.exe
 setup/*.log
 setup/bin
 setup/obj
+
+# Visual Studio配置
+setup/.vs
