@@ -1,0 +1,163 @@
+﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs" xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
+	<?define ProductNameRaw = "MiraclePlayer"?>
+	<?define MainEXEName = "$(ProductNameRaw).exe"?>
+	<?define MainEXE = "[INSTALLDIR]$(MainEXEName)"?>
+
+	<Package Name="奇迹音乐" Language="2052" Version="1.0.0.1" Manufacturer="奇迹音乐开发组" Codepage="936" ProductCode="{FC7BDE8C-46CC-471B-B7E6-1C084F534D78}" UpgradeCode="6169e8f8-12a7-458d-8c36-6f45de1cd3cb" InstallerVersion="200">
+		<Media Id="1" EmbedCab="yes" Cabinet="$(ProductNameRaw)" />
+
+		<MajorUpgrade DowngradeErrorMessage="已安装[ProductName]的一个更新版本。" />
+
+		<Property Id="CreateDesktopShortcut" Value="checked" />
+		<Property Id="CreateStartMenuShortcut" Value="checked" />
+		<Property Id="DoRmvUserData" Value="0" />
+		<Property Id='ARPPRODUCTICON' Value='appicon.ico' />
+		<Icon Id="appicon.ico" SourceFile="../mplayer.ico" />
+		<Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="运行奇迹音乐" />
+		<Property Id="Taskkill" Value="taskkill.exe" />
+
+		<ui:WixUI Id="WixUI_Mondo" />
+		<ui:WixUI Id="WixUI_ErrorProgressText" />
+		<UIRef Id="AdditionalTasks" />
+		<UIRef Id="UserDataUI"/>
+		<UIRef Id="ExitRunUI"/>
+
+		<Feature Id="ProductFeature" Title="主程序" Description="奇迹音乐主程序文件，该项必须勾选。" AllowAbsent="no" AllowAdvertise="no" Level="1" ConfigurableDirectory="INSTALLDIR">
+			<ComponentRef Id="AssocReg"/>
+			<ComponentGroupRef Id="HarvestedComponents" />
+		</Feature>
+
+		<FeatureRef Id="Assoc"/>
+		<FeatureRef Id="StartMenuShortcutFeat"/>
+		<FeatureRef Id="DesktopShortcutFeat"/>
+
+		<WixVariable Id="WixUILicenseRtf" Value="License.rtf" />
+		<WixVariable Id="WixUIBannerBmp" Value="mplayer_493_58.bmp" />
+		<WixVariable Id="WixUIDialogBmp" Value="welcomefinished_493_312.bmp" />
+
+		<CustomActionRef Id="RemoveUserData"/>
+		<CustomAction Id="TerminateEXE" Property="Taskkill" ExeCommand="/f /im $(MainEXEName)" Return="ignore" />
+		<InstallExecuteSequence>
+			<Custom Action="TerminateEXE" After="CostInitialize" />
+			<Custom Action="RemoveUserData" After="RemoveRegistryValues" Condition="DoRmvUserData = &quot;1&quot; AND WixUI_InstallMode = Remove" />
+		</InstallExecuteSequence>
+	</Package>
+
+	<Fragment>
+		<UI Id="AdditionalTasks">
+			<Dialog Id="AddTasksDlg" Width="370" Height="270" Title="[ProductName] 安装">
+				<Control Id="Title" Type="Text" X="15" Y="6" Width="200" Height="15" Transparent="yes" NoPrefix="yes"
+			  Text="{\WixUI_Font_Title}选择附加任务"/>
+				<Control Id="Description" Type="Text" X="25" Y="23" Width="280" Height="15"
+			  Transparent="yes" NoPrefix="yes" Text="您想要安装程序执行哪些附加任务？" />
+
+				<Control Id="Text" Type="Text" X="25" Y="70" Width="320" Height="20" Text="选择您想要安装程序执行的附加任务，然后单击“下一步”继续。" />
+				<Control Id="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="WixUI_Bmp_Banner" />
+				<Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
+				<Control Id="BannerLine" Type="Line" X="0" Y="44" Width="370" Height="0" />
+				<Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Text="!(loc.WixUIBack)" >
+					<Publish Event="NewDialog" Value="CustomizeDlg" />
+				</Control>
+				<Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="!(loc.WixUINext)">
+					<Publish Event="NewDialog" Value="VerifyReadyDlg" />
+					<Publish Event="AddLocal" Value="StartMenuShortcutFeat" Condition="CreateStartMenuShortcut = &quot;checked&quot;" />
+					<Publish Event="AddLocal" Value="DesktopShortcutFeat" Condition="CreateDesktopShortcut = &quot;checked&quot;" />
+					<Publish Event="Remove" Value="StartMenuShortcutFeat" Condition="CreateStartMenuShortcut &lt;&gt; &quot;checked&quot;"/>
+					<Publish Event="Remove" Value="DesktopShortcutFeat" Condition="CreateDesktopShortcut &lt;&gt; &quot;checked&quot;"/>
+				</Control>
+				<Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="!(loc.WixUICancel)">
+					<Publish Event="SpawnDialog" Value="CancelDlg" />
+				</Control>
+				<Control Id="DesktopShortcutCheckBox" Type="CheckBox" X="25" Y="100" Width="320" Height="20" CheckBoxValue="checked" Property="CreateDesktopShortcut" Text="创建桌面快捷方式" />
+				<Control Id="StartMenuShortcutCheckBox" Type="CheckBox" X="25" Y="120" Width="320" Height="20" CheckBoxValue="checked" Property="CreateStartMenuShortcut" Text="创建开始菜单快捷方式" />
+			</Dialog>
+			<Publish Dialog="CustomizeDlg" Control="Next" Event="NewDialog" Value="AddTasksDlg" />
+			<Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="AddTasksDlg" Condition="WixUI_InstallMode = &quot;InstallCustom&quot;" />
+		</UI>
+	</Fragment>
+
+	<Fragment>
+		<StandardDirectory Id="ProgramFiles64Folder">
+			<Directory Id="INSTALLDIR" Name="Miracle Player" />
+		</StandardDirectory>
+		<StandardDirectory Id="ProgramMenuFolder">
+			<Directory Id="ProgramMenuDir" Name="奇迹音乐" />
+		</StandardDirectory>
+	</Fragment>
+
+	<Fragment>
+		<Feature Id="Assoc" Title="文件关联" Description="以后想要使用奇迹音乐打开的文件类型。" Display="expand" TypicalDefault="advertise">
+			<?foreach assocext in mp3;wav;wma;mid;midi;ogg;aac;flac;m4a?>
+			<Feature Id="$(assocext)" Title=".$(assocext)" TypicalDefault="advertise">
+				<Component Id="$(assocext)Comp" Guid="*" Directory="INSTALLDIR">
+					<RegistryValue Id="$(assocext)Support" Root="HKLM" Key="Software\Classes\Applications\$(MainEXEName)\SupportedTypes" KeyPath="yes" Name=".$(assocext)" Value="1" Type="binary" />
+					<RegistryValue Id="$(assocext)Ext" Root="HKLM" Key="Software\Classes\.$(assocext)\OpenWithProgids" Name="$(ProductNameRaw)" Value="1" Type="binary" />
+				</Component>
+			</Feature>
+			<?endforeach?>
+		</Feature>
+	</Fragment>
+
+	<Fragment>
+		<!-- 快捷方式部分 -->
+		<Feature Id="StartMenuShortcutFeat" Display="hidden">
+			<Component Id='StartMenuShortcutComp' Directory='ProgramMenuDir' Guid='{5872CC50-DAC3-4A31-B6A7-A2709DD11E44}'>
+				<RemoveFolder Id='RmvStartMenuShortcutDir' Directory='ProgramMenuDir' On='uninstall'/>
+				<Shortcut Id="mplayer_startmenu" Directory="ProgramMenuDir" Name="奇迹音乐" Target="$(MainEXE)"
+						WorkingDirectory='INSTALLDIR' />
+				<RegistryValue Id='StartMenuShortcutCreation' Root='HKCU' Key='Software\MiraclePlayerGroup\MiraclePlayer' Name='Start Menu Shortcut Creation' Type='binary' Value='1' KeyPath='yes' />
+			</Component>
+		</Feature>
+		<Feature Id="DesktopShortcutFeat" Display="hidden">
+			<Component Id='DesktopShortcutComp' Directory='DesktopFolder' Guid='{CA78D149-CB7D-4863-9800-7C9E263BB43A}'>
+				<Shortcut Id="mplayer_desktop" Directory="DesktopFolder" Name="奇迹音乐" Target="$(MainEXE)"
+						WorkingDirectory='INSTALLDIR' />
+				<RegistryValue Id='DesktopShortcutCreation' Root='HKCU' Key='Software\MiraclePlayerGroup\MiraclePlayer' Name='Desktop Shortcut Creation' Type='binary' Value='1' KeyPath='yes' />
+			</Component>
+		</Feature>
+	</Fragment>
+
+	<Fragment>
+		<!--用户数据-->
+		<UI  Id="UserDataUI">
+			<Dialog Id="UserDataDlg" Width="260" Height="85" Title="[ProductName] 安装" NoMinimize="yes">
+				<Control Id="No" Type="PushButton" X="132" Y="57" Width="56" Height="17"
+				  Default="yes" Cancel="yes" Text="!(loc.WixUINo)">
+					<Publish Event="NewDialog" Value="VerifyReadyDlg" />
+					<Publish Property="DoRmvUserData" Value="1"/>
+				</Control>
+				<Control Id="Yes" Type="PushButton" X="72" Y="57" Width="56" Height="17" Text="!(loc.WixUIYes)">
+					<Publish Event="NewDialog" Value="VerifyReadyDlg" />
+					<Publish Property="DoRmvUserData" Value="0"/>
+				</Control>
+				<Control Id="Text" Type="Text" X="48" Y="15" Width="194" Height="30" Text="是否保留用户数据？" />
+
+				<Control Id="Icon" Type="Icon" X="15" Y="15" Width="24" Height="24"
+				  ToolTip="信息图标" FixedSize="yes" IconSize="32" Text="WixUI_Ico_Info" />
+			</Dialog>
+
+			<Publish Dialog="MaintenanceTypeDlg" Control="RemoveButton" Event="NewDialog" Value="UserDataDlg" />
+		</UI>
+		<Property Id="REG" Value="reg.exe" />
+		<CustomAction Id="RemoveUserData" Property="REG" ExeCommand="delete HKCU\Software\MiraclePlayerGroup /f" />
+	</Fragment>
+
+	<Fragment>
+		<Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Value="1" />
+		<CustomAction Id="SetMainEXE" Property="MainEXEProp" Value="$(MainEXE)" />
+		<CustomAction Id="ExitRunEXE" Property="MainEXEProp" ExeCommand="" Return="asyncNoWait" />
+		<UI Id="ExitRunUI">
+			<Publish Dialog="ExitDialog" Control="Finish" Event="DoAction" Value="SetMainEXE" Order="1" Condition="WIXUI_EXITDIALOGOPTIONALCHECKBOX = &quot;1&quot;" />
+			<Publish Dialog="ExitDialog" Control="Finish" Event="DoAction" Value="ExitRunEXE" Order="2" Condition="WIXUI_EXITDIALOGOPTIONALCHECKBOX = &quot;1&quot;" />
+		</UI>
+	</Fragment>
+
+	<Fragment>
+		<Component Id='AssocReg' Directory='INSTALLDIR' Guid='{B4AAB71D-7B0B-4514-A9DE-ED4B5616C1CA}'>
+			<RegistryValue Id='AssocCLS' Root='HKLM' Key='Software\Classes\$(ProductNameRaw)' Type='string' Value='音频文件' KeyPath='yes' />
+			<RegistryValue Id='AssocCLSIcon' Root='HKLM' Key='Software\Classes\$(ProductNameRaw)\DefaultIcon' Type='string' Value='$(MainEXE)' />
+			<RegistryValue Id='AssocCLSOpen' Root='HKLM' Key='Software\Classes\$(ProductNameRaw)\shell\open' Type='string' Value='使用奇迹音乐播放' />
+			<RegistryValue Id='AssocCLSCommand' Root='HKLM' Key='Software\Classes\$(ProductNameRaw)\shell\open\command' Type='string' Value='$(MainEXE)' />
+		</Component>
+	</Fragment>
+</Wix>

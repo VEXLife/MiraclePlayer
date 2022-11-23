@@ -1,0 +1,18 @@
+﻿<Project Sdk="WixToolset.Sdk/4.0.0-preview.1">
+  <PropertyGroup>
+    <Cultures>zh-CN</Cultures>
+    <InstallerPlatform>x64</InstallerPlatform>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="WixToolset.Heat" Version="4.0.0-preview.1" />
+    <PackageReference Include="WixToolset.UI.wixext" Version="4.0.0-preview.1" />
+    
+    <HarvestDirectory Include="../miracleplayer_release">
+      <ComponentGroupName>HarvestedComponents</ComponentGroupName>
+      <DirectoryRefId>INSTALLDIR</DirectoryRefId>
+      <SuppressRootDirectory>true</SuppressRootDirectory>
+    </HarvestDirectory>
+
+    <BindPath Include="../miracleplayer_release" />
+  </ItemGroup>
+</Project>

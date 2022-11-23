@@ -4,3 +4,5 @@ miracleplayer_release/
 # 生成的安装程序不同步
 setup/*.exe
 setup/*.log
+setup/bin
+setup/obj

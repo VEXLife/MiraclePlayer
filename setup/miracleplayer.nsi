@@ -30,7 +30,7 @@ InstallDirRegKey HKLM "${PRODUCT_INSTALL_KEY}" "InstallLocation"
 !define MUI_HEADERIMAGE_UNBITMAP_STRETCH AspectFitHeight
 !define MUI_HEADERIMAGE_RIGHT
 !insertmacro MUI_PAGE_WELCOME
-!insertmacro MUI_PAGE_LICENSE "..\LICENSE"
+!insertmacro MUI_PAGE_LICENSE "License.rtf"
 !insertmacro MUI_PAGE_COMPONENTS
 !insertmacro MUI_PAGE_DIRECTORY
 Var StartMenuFolder
@@ -43,7 +43,7 @@ Var CreateDesktopShortcutCheckbox
 Page custom ShowAdditionalTasks LeaveAdditionalTasks
 !insertmacro MUI_PAGE_INSTFILES
 !define MUI_FINISHPAGE_RUN "$INSTDIR\MiraclePlayer.exe"
-!define MUI_FINISHPAGE_RUN_TEXT "∆Ù∂Ø$(^Name)"
+!define MUI_FINISHPAGE_RUN_TEXT "‘À––$(^Name)"
 !insertmacro MUI_PAGE_FINISH
 
 !insertmacro MUI_UNPAGE_WELCOME
